@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Biblioteca</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+  <header>
+    <h1>📚 Biblioteca</h1>
+
+    <nav>
+      <a href="{{ url_for('novo') }}" class="btn">➕ Novo Livro</a>
+      <a href="{{ url_for('grafico') }}" class="btn">📊 Gráfico Barras</a>
+      <a href="{{ url_for('grafico_pizza') }}" class="btn">📊 Gráfico Pizza</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <h2>Livros Cadastrados</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="card-grid">
+
+      {% for livro in livros %}
+
+        <div class="card">
+
+          <!-- Imagem do livro -->
+          {% if imagem_existe(livro[0]) %}
+            <img
+              src="{{ url_for('upload', filename=livro[0] ~ '.png') }}"
+              alt="Capa do livro {{ livro[1] }}"
+              class="livro-imagem"
+            >
+          {% endif %}
+
+          <h3>{{ livro[1] }}</h3>
+
+          <p>
+            <span class="label">Autor:</span> 
+            {{ livro[2] }}
+          </p>
+
+          <p>
+            <span class="label">Ano:</span> 
+            {{ livro[3] }}
+          </p>
+
+          <div class="actions">
+
+            <a href="{{ url_for('editar', id=livro[0]) }}" class="action edit">
+              ✏️ Editar
+            </a>
+
+            <a href="{{ url_for('confirmar_delete', id=livro[0]) }}" class="action delete">
+              🗑️ Deletar
+            </a>
+
+          </div>
+
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+  </main>
+
+</body>
+</html>

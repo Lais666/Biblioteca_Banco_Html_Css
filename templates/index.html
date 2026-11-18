@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Bem-vindo à Biblioteca</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header>
+    <h1>📚 Biblioteca Virtual</h1>
+    <nav>
+      <a href="{{ url_for('acervo') }}" class="btn">📖 Ver Livros</a>
+      <a href="{{ url_for('grafico') }}" class="btn">📊 Estatísticas</a>
+      <a href="{{ url_for('novo') }}" class="btn">➕ Adicionar Livro</a>
+      <a href="{{ url_for('cadastro_usuario') }}" class="btn">👤 Cadastrar Usuário</a>
+
+      {% if session.usuario_id %}
+        <a href="{{ url_for('logout') }}" class="btn" style="background-color: #f87171;">🚪 Sair</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="btn">🔐 Login</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    <section style="text-align: center; margin-bottom: 40px;">
+      <h2>Bem-vindo à nossa Biblioteca Digital</h2>
+      <p style="font-size: 1.1rem; max-width: 800px; margin: auto; color: var(--text-soft);">
+        Aqui você encontra um acervo organizado com títulos de diferentes gêneros, autores e épocas. Nossa biblioteca digital é pensada para facilitar o acesso ao conhecimento, com um sistema moderno de consulta, cadastro e visualização de dados.
+      </p>
+    </section>
+
+    <section style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+      <div class="card" style="max-width: 300px;">
+        <h3>📚 Acervo Variado</h3>
+        <p>Contamos com livros clássicos, contemporâneos, históricos e muito mais. Atualizações constantes garantem um acervo vivo e relevante.</p>
+      </div>
+
+      <div class="card" style="max-width: 300px;">
+        <h3>📊 Gráficos Interativos</h3>
+        <p>Acompanhe a evolução da biblioteca com visualizações fáceis de entender. Veja quantos livros foram adicionados por ano.</p>
+      </div>
+
+      <div class="card" style="max-width: 300px;">
+        <h3>✍️ Colabore</h3>
+        <p>Tem um título que ainda não está no sistema? Cadastre você mesmo! Nosso sistema é simples, rápido e intuitivo.</p>
+      </div>
+
+      <div class="card" style="max-width: 300px;">
+        <h3>👥 Cadastro de Usuários</h3>
+        <p>Permita que novos usuários acessem a biblioteca. Cadastro com segurança, validação e proteção de dados garantida.</p>
+      </div>
+    </section>
+
+    <section style="text-align: center; margin-top: 50px;">
+      <a href="{{ url_for('acervo') }}" class="btn">📖 Explorar Livros</a>
+    </section>
+  </main>
+</body>
+</html>

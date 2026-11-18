@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Livro</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+  <header>
+    <h1>📘 Editar Livro</h1>
+
+    <nav>
+      <a href="{{ url_for('index') }}" class="btn">🏠 Início</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <h2>Editar Livro</h2>
+
+    <form 
+      action="{{ url_for('editar', id=livro[0]) }}" 
+      method="post" 
+      enctype="multipart/form-data"
+    >
+
+      <label for="titulo">Título:</label>
+      <input 
+        type="text" 
+        id="titulo" 
+        name="titulo" 
+        value="{{ livro[1] }}" 
+        required
+      >
+
+      <label for="autor">Autor:</label>
+      <input 
+        type="text" 
+        id="autor" 
+        name="autor" 
+        value="{{ livro[2] }}" 
+        required
+      >
+
+      <label for="ano_publicacao">Ano de Publicação:</label>
+      <input 
+        type="number" 
+        id="ano_publicacao" 
+        name="ano_publicacao" 
+        value="{{ livro[3] }}" 
+        required
+      >
+
+      <label for="arquivo">Capa do Livro:</label>
+
+      <input
+        type="file"
+        id="arquivo"
+        name="arquivo"
+        accept=".jpg,.jpeg,.png"
+        onchange="mostrarImagem(event)"
+      >
+
+      <!-- Prévia da imagem existente ou da nova imagem -->
+      <div 
+        id="preview-container"
+        style="margin-top: 15px; {% if not imagem_existe %}display: none;{% endif %}"
+      >
+
+        <p>Prévia da capa:</p>
+
+        <img
+          id="preview"
+
+          {% if imagem_existe %}
+            src="{{ url_for('upload', filename=livro[0] ~ '.png') }}"
+          {% else %}
+            src=""
+          {% endif %}
+
+          alt="Prévia da capa"
+
+          style="
+            width: 150px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+          "
+        >
+
+      </div>
+
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+
+        <button type="submit" class="btn">
+          💾 Salvar Alterações
+        </button>
+
+        <a 
+          href="{{ url_for('index') }}" 
+          class="btn" 
+          style="background-color: #f87171;"
+        >
+          ❌ Cancelar
+        </a>
+
+      </div>
+
+    </form>
+
+  </main>
+
+  <script>
+
+    function mostrarImagem(event) {
+
+      const arquivo = event.target.files[0];
+
+      if (arquivo) {
+
+        const imagem = document.getElementById('preview');
+
+        const container = document.getElementById('preview-container');
+
+        imagem.src = URL.createObjectURL(arquivo);
+
+        container.style.display = 'block';
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
